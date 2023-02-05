@@ -41,8 +41,9 @@ void rewrite(int fd, const void *buf, size_t count)
      - Repeat this until all the data has been sent,
        but be careful not to send the same bytes more than once.
     */
-   	char* restart = buf;
 	size_t remaining = count;
+	char* restart = buf + strlen(buf) - remaining;
+	write(fd, restart, remaining);
 }
 
 char* build_query(const char *host, size_t *len)
@@ -167,11 +168,10 @@ void print_page(const char *host)
 	// Print the response
     char buffer[BUFFER_SIZE];
 	while (read(socket_fd, buffer, BUFFER_SIZE) > 0) {
-		for (int i = 0; i < strlen(buffer); i++) {
+		for (int i = 0; i < (int)strlen(buffer); i++) {
 			printf("%c", buffer[i]);
 		}
 		memset(buffer, '\0', BUFFER_SIZE);
 	}
-	printf("\n");
 	close(socket_fd);
 }
