@@ -43,7 +43,14 @@ void rewrite(int fd, const void *buf, size_t count)
     */
 	size_t remaining = count;
 	char* restart = buf + strlen(buf) - remaining;
-	write(fd, restart, remaining);
+	while (remaining > 0) {
+		ssize_t sent = write(fd, restart, remaining);
+		if (sent == -1) {
+			err(EXIT_FAILURE, "Could not write to socket");
+		}
+		remaining -= sent;
+		restart += sent;
+	}
 }
 
 char* build_query(const char *host, size_t *len)
@@ -75,7 +82,6 @@ char* build_query(const char *host, size_t *len)
    	//  But, asprintf(3) is not C standard and is not available on all systems
 	//  Use malloc(3) and strcat(3) instead.
     char prefix[] = "GET http://www.";
-	strlen(host);
 	char postfix[] = " HTTP/1.0\r\n\r\n";
 	char* request = malloc(
 		strlen(prefix) + strlen(host) + strlen(postfix) + 1
