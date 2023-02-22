@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "debug: main",
+            "program": "${workspaceFolder}/main",
+            "args": ["example.com"],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "build by Makefile",
+        }
+    ]
+}

@@ -32,9 +32,6 @@
 *.out
 *.app
 
-## VSCode
-.vscode
-
 ## MacOS
 # General
 .DS_Store

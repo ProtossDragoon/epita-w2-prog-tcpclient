@@ -77,3 +77,7 @@ Connection: close
 </body>
 </html>
 ```
+
+## Notes
+
+If you are using VSCode, change your "type" in your launch.json file, e.g. `"type": "gdb"`
